@@ -1,6 +1,0 @@
-C:/Users/Jack/CLionProjects/Advent-Of-Code-2021-C/cmake-build-debug/CMakeFiles/Day1.dir
-C:/Users/Jack/CLionProjects/Advent-Of-Code-2021-C/cmake-build-debug/CMakeFiles/sandbox.dir
-C:/Users/Jack/CLionProjects/Advent-Of-Code-2021-C/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-C:/Users/Jack/CLionProjects/Advent-Of-Code-2021-C/cmake-build-debug/CMakeFiles/Day2.dir
-C:/Users/Jack/CLionProjects/Advent-Of-Code-2021-C/cmake-build-debug/CMakeFiles/Day3.dir
-C:/Users/Jack/CLionProjects/Advent-Of-Code-2021-C/cmake-build-debug/CMakeFiles/edit_cache.dir

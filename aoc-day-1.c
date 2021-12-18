@@ -1,60 +1,54 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <errno.h>
+#include "common.h"
 
-void part_1() {
-    int cur_num, last_num = 0;
-    int increments = 0;
 
-    // Read input file into data.
-    FILE *fp = fopen("C:\\Users\\JackM\\CLionProjects\\advent-of-code-2021\\input\\day-1.txt", "r");
+int main(int argc, char* argv[]) {
+    int cur_num;
+    int last_num = 0;
+    int third_num = 0;
+
+    int cur_sum;
+    int prev_sum;
+
+    int increments1 = 0;
+    int increments2 = 0;
+
+    if (argc < 2) {
+        perror("Missing argument: project_dir.\n");
+        return 1;
+    }
+
+    const char *file_path = get_input_file(argv[1], 1);
+
+    FILE *fp = fopen(file_path, "r");
     if (fp == NULL) {
         printf("Failed to read file! %s\n", strerror(errno));
+        return 1;
     }
 
     int i = 0;
     while(fscanf(fp, "%d", &cur_num) == 1) {
+        // Part 1
         if (i >= 1 && cur_num > last_num) {
-            increments++;
+            increments1++;
         }
+
+        // Part 2
+        cur_sum = cur_num + last_num + third_num;
+        if (i > 2 && cur_sum > prev_sum) {
+            increments2++;
+        }
+
+        third_num = last_num;
         last_num = cur_num;
-        i++;
-    }
-    fclose(fp);
-
-    printf("Num increments: %d\n", increments);
-}
-
-void part_2() {
-    int first_num, second_num, third_num = 0;
-    int cur_sum, prev_sum = 0;
-    int increments = 0;
-
-    // Read input file into data.
-    FILE *fp = fopen("C:\\Users\\JackM\\CLionProjects\\advent-of-code-2021\\input\\day-1.txt", "r");
-    if (fp == NULL) {
-        printf("Failed to read file! %s\n", strerror(errno));
-    }
-
-    int i = 0;
-    while(fscanf(fp, "%d", &first_num) == 1) {
-        cur_sum = first_num + second_num + third_num;
-        if (i >= 2 && cur_sum > prev_sum) {
-            increments++;
-        }
-        third_num = second_num;
-        second_num = first_num;
         prev_sum = cur_sum;
         i++;
     }
     fclose(fp);
 
-    printf("Num three-window increments: %d\n", increments);
-}
-
-int main() {
-    part_1();
-    part_2();
+    printf("Part1: %d\n", increments1);
+    printf("Part2: %d\n", increments2);
     return 0;
 }

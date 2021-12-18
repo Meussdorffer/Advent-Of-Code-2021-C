@@ -15,15 +15,6 @@ int main(int argc, char* argv[]) {
         printf("Failed to read file! %s\n", strerror(errno));
         return 1;
     }
-
-    int i = 0;
-    while(fscanf(fp, "%d", &cur_num) == 1) {
-        if (i >= 1 && cur_num > last_num) {
-            increments++;
-        }
-        last_num = cur_num;
-        i++;
-    }
     fclose(fp);
 
     return 0;

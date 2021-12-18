@@ -22,6 +22,8 @@ int main(int argc, char* argv[]) {
 
     const char *file_path = get_input_file(argv[1], 1);
 
+    printf("fp: %s\n", file_path);
+
     FILE *fp = fopen(file_path, "r");
     if (fp == NULL) {
         printf("Failed to read file! %s\n", strerror(errno));

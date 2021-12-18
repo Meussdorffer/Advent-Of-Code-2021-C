@@ -1,0 +1,78 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.21"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "advent_of_code_2021",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Day1::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Day1-Debug-fd20245f8a99f952b8b9.json",
+					"name" : "Day1",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Day2::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Day2-Debug-4673cf76dc1e66acf7a6.json",
+					"name" : "Day2",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Day3::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Day3-Debug-2320aa91bd95b959c684.json",
+					"name" : "Day3",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/JackM/CLionProjects/advent-of-code-2021/cmake-build-debug",
+		"source" : "C:/Users/JackM/CLionProjects/advent-of-code-2021"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

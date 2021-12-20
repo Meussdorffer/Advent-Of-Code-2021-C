@@ -2,15 +2,22 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include "common.h"
 
-void part_1() {
+int main(int argc, char* argv[]) {
     int * arr;
     int gamma = 0, epsilon = 0;
     int bufsize = 100;
     char line[bufsize];
 
-    // Read input file into data.
-    FILE *fp = fopen("C:\\Users\\JackM\\CLionProjects\\advent-of-code-2021\\input\\day-3.txt", "r");
+    if (argc < 2) {
+        perror("Missing argument: project_dir.\n");
+        return 1;
+    }
+
+    const char *file_path = get_input_file(argv[1], 3);
+
+    FILE *fp = fopen(file_path, "r");
     if (fp == NULL) {
         printf("Failed to read file! %s\n", strerror(errno));
     }
@@ -49,15 +56,10 @@ void part_1() {
         }
     }
 
-    printf("Gamma: %d, Epsilon: %d, Power Consumption: %d\n", gamma, epsilon, gamma * epsilon);
-
     // Release resources.
     free(arr);
-}
 
+    printf("Part1: %d\n", gamma * epsilon);
 
-int main() {
-    part_1();
-//    part_2();
     return 0;
 }

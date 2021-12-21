@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
     // Allocate & populate array of bitstrings.
     // Also do most of part1 within the loop.
     size_t bitlen;
-    num_bitstrs = get_num_file_lines(file_path);
+    num_bitstrs = get_num_file_lines(fp);
     bitstr_arr = (char**) malloc(sizeof(char*) * num_bitstrs);
     for(int i=0; i < num_bitstrs; i++) {
         bitstr_arr[i] = (char *) malloc(BITSTR_SIZE);
@@ -58,55 +58,55 @@ int main(int argc, char* argv[]) {
     }
 
     // Calculate part2 result.
-    int valid_strs = num_bitstrs;
-    int * valid_str_idxs = malloc(sizeof(int) * num_bitstrs);
-    memset(valid_str_idxs, 1, num_bitstrs);
-
-    int bitidx = 0;
-    int bestidx;
-    while(valid_strs > 0) {
-        int zeros = 0;
-        int ones = 0;
-
-        // Sum the bit occurrences in the bitidx'th position.
-        for(int i=0; i < num_bitstrs; i++) {
-            if (valid_str_idxs[i]) {
-                switch (bitstr_arr[i][bitidx]) {
-                    case '0':
-                        zeros++;
-                        break;
-                    case '1':
-                        ones++;
-                        break;
-                }
-            }
-        }
-
-        char mode_char;
-        if (zeros > ones) {
-            mode_char = "0";
-        } else {
-            mode_char = "1";
-        }
-
-        for(int i=0; i < num_bitstrs; i++) {
-            if (valid_str_idxs[i] && (bitstr_arr[i][bitidx] != mode_char)) {
-                valid_str_idxs[i] = 0;
-                valid_strs--;
-            }
-        }
-
-        if (valid_strs == 1) {
-            for(int i=0; i < num_bitstrs; i++) {
-                bestidx = i;
-                if (valid_str_idxs[i] == 1) break;
-            }
-            valid_strs = 0;
-        }
-    }
+    // int valid_strs = num_bitstrs;
+    // int * valid_str_idxs = malloc(sizeof(int) * num_bitstrs);
+    // memset(valid_str_idxs, 1, num_bitstrs);
+    //
+    // int bitidx = 0;
+    // int bestidx;
+    // while(valid_strs > 0) {
+    //     int zeros = 0;
+    //     int ones = 0;
+    //
+    //     // Sum the bit occurrences in the bitidx'th position.
+    //     for(int i=0; i < num_bitstrs; i++) {
+    //         if (valid_str_idxs[i]) {
+    //             switch (bitstr_arr[i][bitidx]) {
+    //                 case '0':
+    //                     zeros++;
+    //                     break;
+    //                 case '1':
+    //                     ones++;
+    //                     break;
+    //             }
+    //         }
+    //     }
+    //
+    //     char mode_char;
+    //     if (zeros > ones) {
+    //         mode_char = "0";
+    //     } else {
+    //         mode_char = "1";
+    //     }
+    //
+    //     for(int i=0; i < num_bitstrs; i++) {
+    //         if (valid_str_idxs[i] && (bitstr_arr[i][bitidx] != mode_char)) {
+    //             valid_str_idxs[i] = 0;
+    //             valid_strs--;
+    //         }
+    //     }
+    //
+    //     if (valid_strs == 1) {
+    //         for(int i=0; i < num_bitstrs; i++) {
+    //             bestidx = i;
+    //             if (valid_str_idxs[i] == 1) break;
+    //         }
+    //         valid_strs = 0;
+    //     }
+    // }
 
     printf("Part1: %d\n", gamma * epsilon);
-    printf("Part2: %s\n", bitstr_arr[bestidx]);
+    // printf("Part2: %s\n", bitstr_arr[bestidx]);
 
     // Release resources.
     free(arr);

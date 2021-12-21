@@ -30,21 +30,16 @@ FILE* get_input_file(const int day_num) {
     return fp;
 }
 
-int get_num_file_lines(const char* file_path) {
+int get_num_file_lines(FILE* fp) {
     int num_lines = 1;
     char ch;
-
-    FILE *fp = fopen(file_path, "r");
-    if (fp == NULL) {
-        printf("Failed to read file! %s\n", strerror(errno));
-    }
 
     while(!feof(fp)) {
         ch = fgetc(fp);
         if (ch == '\n') num_lines++;
     }
 
-    fclose(fp);
+    rewind(fp);
 
     return num_lines;
 }

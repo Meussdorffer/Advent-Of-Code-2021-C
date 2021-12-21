@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.21)
+#cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.16.3)
 project(advent_of_code_2021 C)
 
 set(CMAKE_C_STANDARD 99)

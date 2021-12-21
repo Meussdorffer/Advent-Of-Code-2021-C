@@ -1,15 +1,50 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#define PATH_LEN 100
+#include <errno.h>
+#include <unistd.h>
 
-const char* get_input_file(const char* project_dir, const int day_num) {
-    char file_stem[20];
-    sprintf(file_stem, "\\input\\day-%d.txt", day_num);
+const int MAX_PATH_SIZE = 250;
+const int MAX_ERR_MSG_LEN = 1000;
 
-    static char input_filepath[PATH_LEN];
-    input_filepath[0] = '\0';
-    strncat(input_filepath, project_dir, PATH_LEN - 1);
-    strncat(input_filepath, file_stem, PATH_LEN - 1);
+FILE* get_input_file(const int day_num) {
+    char path[MAX_PATH_SIZE];
+    char file_stem[30];
 
-    return input_filepath;
+    path[0] = '\0';
+    getcwd(path, sizeof(path));
+    sprintf(file_stem, "/../input/day-%d.txt", day_num);
+    strncat(path, file_stem, MAX_PATH_SIZE - 1);
+
+    // debug.
+    // printf("Path: %s\n", path);
+
+    FILE *fp = fopen(path, "r");
+    if (fp == NULL) {
+        char msg[MAX_ERR_MSG_LEN];
+        sprintf(msg, "Failed to open file %s", path);
+        perror(msg);
+        exit(EXIT_FAILURE);
+    }
+
+    return fp;
+}
+
+int get_num_file_lines(const char* file_path) {
+    int num_lines = 1;
+    char ch;
+
+    FILE *fp = fopen(file_path, "r");
+    if (fp == NULL) {
+        printf("Failed to read file! %s\n", strerror(errno));
+    }
+
+    while(!feof(fp)) {
+        ch = fgetc(fp);
+        if (ch == '\n') num_lines++;
+    }
+
+    fclose(fp);
+
+    return num_lines;
 }

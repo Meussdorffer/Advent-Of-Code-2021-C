@@ -1,10 +1,8 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "common.h"
 
 
-int main(int argc, char* argv[]) {
+int main() {
     int cur_num;
     int last_num = 0;
     int third_num = 0;
@@ -15,18 +13,7 @@ int main(int argc, char* argv[]) {
     int increments1 = 0;
     int increments2 = 0;
 
-    if (argc < 2) {
-        perror("Missing argument: project_dir.\n");
-        return 1;
-    }
-
-    const char *file_path = get_input_file(argv[1], 1);
-
-    FILE *fp = fopen(file_path, "r");
-    if (fp == NULL) {
-        printf("Failed to read file! %s\n", strerror(errno));
-        return 1;
-    }
+    FILE *fp = get_input_file(1);
 
     int i = 0;
     while(fscanf(fp, "%d", &cur_num) == 1) {

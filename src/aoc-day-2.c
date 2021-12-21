@@ -4,7 +4,7 @@
 #include "common.h"
 
 
-int main(int argc, char* argv[]) {
+int main() {
     int horiz = 0;
     int depth1 = 0;
     int depth2 = 0;
@@ -13,18 +13,8 @@ int main(int argc, char* argv[]) {
     int mov = 0;
     char dir[10];
 
-    if (argc < 2) {
-        perror("Missing argument: project_dir.\n");
-        return 1;
-    }
-
-    const char *file_path = get_input_file(argv[1], 2);
-
     // Read input file into data.
-    FILE *fp = fopen(file_path, "r");
-    if (fp == NULL) {
-        printf("Failed to read file! %s\n", strerror(errno));
-    }
+    FILE *fp = get_input_file(2);
 
     while(fscanf(fp, "%s %d", &dir, &mov) == 2) {
         if (strcmp(dir, "forward") == 0) {

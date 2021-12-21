@@ -16,7 +16,7 @@ int main() {
     // Read input file into data.
     FILE *fp = get_input_file(2);
 
-    while(fscanf(fp, "%s %d", &dir, &mov) == 2) {
+    while(fscanf(fp, "%s %d", (char *) &dir, &mov) == 2) {
         if (strcmp(dir, "forward") == 0) {
             horiz += mov;
             depth2 += mov * aim;
@@ -30,7 +30,7 @@ int main() {
             aim += mov;
         }
         else {
-            printf("Invalid input %s");
+            printf("Invalid input %s", dir);
             return 1;
         }
     }

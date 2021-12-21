@@ -5,8 +5,81 @@
 #include "common.h"
 
 const int BITSTR_SIZE = 100;
+enum rating{oxygen, co2};
 
-int main(int argc, char* argv[]) {
+int calc_rating(const char ** bit_strings, int n_strings, enum rating bit_criteria) {
+    int bit_len=strlen(bit_strings[0]);
+
+    // Init a lookup table that will be pruned on each iteration.
+    int num_bits = n_strings;
+    char ** bits_table = malloc(sizeof(char*) * n_strings);
+    for(int i=0; i<n_strings; i++) bits_table[i] = (char *) bit_strings[i];
+
+    // Reduce lookup table until one bit string remains.
+    char * final_bit_str;
+    for(int bit_idx=0; bit_idx < bit_len; bit_idx++) {
+        // Get "mode" bit.
+        int ones = 0;
+        int zeros = 0;
+        char mode;
+        for (int i = 0; i < n_strings; i++) {
+            if (bits_table[i] != NULL) {
+                switch (bits_table[i][bit_idx]) {
+                    case '0':
+                        zeros++;
+                        break;
+                    case '1':
+                        ones++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        switch (bit_criteria) {
+            case oxygen:
+                mode = (ones >= zeros) ? '1' : '0'; // most common bit, break ties with 1.
+                break;
+            case co2:
+                mode = (ones >= zeros) ? '0' : '1'; // least common bit, break ties with 0.
+                break;
+            default:
+                perror("Unknown bit_criteria encountered.");
+                return -1;
+        }
+
+        // Remove non-mode bit strings from table.
+        for (int i = 0; i < n_strings; i++) {
+            if (bits_table[i] != NULL && bits_table[i][bit_idx] != mode) {
+                bits_table[i] = NULL;
+                num_bits--;
+            }
+        }
+
+        // Debug: print remaining bit strings.
+        // printf("\n\nRemaining strings:\n");
+        // for (int i = 0; i < n_strings; i++) {
+        //     if (bits_table[i] != NULL) printf("%s\n", bits_table[i]);
+        // }
+
+        // Get the final bit string.
+        if (num_bits == 1) {
+            for (int i = 0; i < n_strings; i++) {
+                if (bits_table[i] != NULL) {
+                    final_bit_str = bits_table[i];
+                    break;
+                }
+            }
+        }
+    }
+
+    // Deallocate.
+    free(bits_table);
+
+    return btoi(final_bit_str);
+}
+
+int main() {
     int * arr = NULL;
     int gamma = 0, epsilon = 0;
     int num_bitstrs;
@@ -49,7 +122,7 @@ int main(int argc, char* argv[]) {
     // Calculate part1 result.
     int power;
     for(int i=0; i<bitlen; i++) {
-        power = pow(2, bitlen-i-1);
+        power = (int) pow(2, (int) bitlen-i-1);
         if (arr[i] < 0) {
             epsilon += power;
         } else {
@@ -58,57 +131,13 @@ int main(int argc, char* argv[]) {
     }
 
     // Calculate part2 result.
-    // int valid_strs = num_bitstrs;
-    // int * valid_str_idxs = malloc(sizeof(int) * num_bitstrs);
-    // memset(valid_str_idxs, 1, num_bitstrs);
-    //
-    // int bitidx = 0;
-    // int bestidx;
-    // while(valid_strs > 0) {
-    //     int zeros = 0;
-    //     int ones = 0;
-    //
-    //     // Sum the bit occurrences in the bitidx'th position.
-    //     for(int i=0; i < num_bitstrs; i++) {
-    //         if (valid_str_idxs[i]) {
-    //             switch (bitstr_arr[i][bitidx]) {
-    //                 case '0':
-    //                     zeros++;
-    //                     break;
-    //                 case '1':
-    //                     ones++;
-    //                     break;
-    //             }
-    //         }
-    //     }
-    //
-    //     char mode_char;
-    //     if (zeros > ones) {
-    //         mode_char = "0";
-    //     } else {
-    //         mode_char = "1";
-    //     }
-    //
-    //     for(int i=0; i < num_bitstrs; i++) {
-    //         if (valid_str_idxs[i] && (bitstr_arr[i][bitidx] != mode_char)) {
-    //             valid_str_idxs[i] = 0;
-    //             valid_strs--;
-    //         }
-    //     }
-    //
-    //     if (valid_strs == 1) {
-    //         for(int i=0; i < num_bitstrs; i++) {
-    //             bestidx = i;
-    //             if (valid_str_idxs[i] == 1) break;
-    //         }
-    //         valid_strs = 0;
-    //     }
-    // }
+    int oxy_rating = calc_rating((const char **) bitstr_arr, num_bitstrs, oxygen);
+    int co2_rating = calc_rating((const char **) bitstr_arr, num_bitstrs, co2);
 
     printf("Part1: %d\n", gamma * epsilon);
-    // printf("Part2: %s\n", bitstr_arr[bestidx]);
+    printf("Part2: %d\n", oxy_rating * co2_rating);
 
-    // Release resources.
+    // Deallocate.
     free(arr);
     for(int i=0; i < num_bitstrs; i++) {
         free(bitstr_arr[i]);

@@ -1,8 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <errno.h>
 #include <unistd.h>
+#include <math.h>
+#include <errno.h>
 
 const int MAX_PATH_SIZE = 250;
 const int MAX_ERR_MSG_LEN = 1000;
@@ -42,4 +43,15 @@ int get_num_file_lines(FILE* fp) {
     rewind(fp);
 
     return num_lines;
+}
+
+int btoi(const char * bit_str) {
+    size_t bitlen = strlen(bit_str);
+    int power = 0;
+    for(int i=0; i<bitlen; i++) {
+        if (bit_str[i] == '1')
+            power += (int) pow(2, (int) bitlen-i-1);
+    }
+
+    return power;
 }

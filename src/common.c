@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <math.h>
 #include <errno.h>
+#include <stdbool.h>
 
 const int MAX_PATH_SIZE = 250;
 const int MAX_ERR_MSG_LEN = 1000;
@@ -54,4 +55,12 @@ int btoi(const char * bit_str) {
     }
 
     return power;
+}
+
+bool is_line_end(const char * str) {
+    bool line_end = false;
+    if ((strcmp(str, "\r\n") == 0) || (strcmp(str, "\n") == 0)) {
+        line_end = true;
+    }
+    return line_end;
 }
